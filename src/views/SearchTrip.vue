@@ -58,14 +58,22 @@ export default {
     font-size: 3rem;
     margin-left: 4rem;
 }
+.search {
+    margin-top: -2rem;
+}
 .search__container {
     display: flex;
+    margin: 0 auto;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
     padding: 0 1rem;
+    width: fit-content;
+}
+.search__container label {
+    display: none;
 }
 .search__container__input {
     margin: 0 .5rem;
