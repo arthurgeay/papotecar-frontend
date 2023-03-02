@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import SearchTrip from '../views/SearchTrip.vue';
+import SearchTrip from '../src/views/SearchTrip.vue';
 
 const routes = [
     {
