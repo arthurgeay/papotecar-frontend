@@ -2,7 +2,7 @@
     <NavBar/>
     <div class="hero">
         <div class="hero__container px-2 sm:px-4 py-2.5 fixed w-full">
-            <h1 class="hero__container__title text-4xl font-bold text-white">Conduisez, voyagez,<br/> papotez !</h1>
+            <h1 class="hero__container__title text-6xl font-bold text-white">Conduisez, voyagez,<br/> papotez !</h1>
         </div>
     </div>
     <div class="search">
@@ -28,14 +28,22 @@
             </div>
         </div>
     </div>
+    <div class="result">
+        <div class="result_container max-w-m p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <ResultElement/>
+        </div>
+    </div>
 </template>
 
 <script>
 import NavBar from "../components/NavBar.vue";
+import ResultElement from "../components/ResultElement.vue";
+
 export default {
     name: "SearchTrip",
     components: {
-        NavBar
+        NavBar,
+        ResultElement
     },
 };
 </script>
@@ -47,16 +55,17 @@ export default {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    height: 40vh;
+    height: 50vh;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    padding-top: 4rem;
 }
 .hero__container__title {
     font-weight: bold;
-    font-size: 3rem;
-    margin-left: 4rem;
+    margin: 0 auto;
+    width: 75vw;
 }
 .search {
     margin-top: -2rem;
@@ -70,12 +79,26 @@ export default {
     width: 100%;
     height: 100%;
     padding: 0 1rem;
-    width: fit-content;
+    width: 75vw;
 }
 .search__container label {
     display: none;
 }
 .search__container__input {
     margin: 0 .5rem;
+}
+.result {
+    margin-top: 2rem;
+}
+.result_container {
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 1rem;
+    width: 75vw;
 }
 </style>
