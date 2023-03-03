@@ -39,6 +39,8 @@
 import NavBar from "../components/NavBar.vue";
 import ResultElement from "../components/ResultElement.vue";
 
+// import bg from "@/assets/background.png";
+
 export default {
     name: "SearchTrip",
     components: {
