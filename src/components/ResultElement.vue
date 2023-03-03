@@ -32,6 +32,10 @@
             </li>
         </ol>
         <div class="resultElement_trip">
+            <div class="resultElement_trip__passagers">
+                <p class="font-bold">Nombre de passagers</p>
+                <p class="number">2</p>
+            </div>
             <div class="resultElement_trip__price">
                 <p class="font-bold">Price</p>
                 <p class="price">50€</p>
@@ -86,8 +90,8 @@ export default {
 .resultElement_trip {
     margin: 0 1rem;
 }
-.resultElement_trip__description {
-    margin-top: 1rem;
+.resultElement_trip > div:not(:last-child) {
+    margin-bottom: 1rem;
 }
 .resultElement_information {
     display: flex;
