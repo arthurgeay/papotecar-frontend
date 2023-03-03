@@ -52,7 +52,7 @@ export default {
 
 <style>
 .hero {
-    background-image: url("../assets/background.png");
+    background-image: url("/assets/background.png");
     background-color: black;
     background-repeat: no-repeat;
     background-size: cover;
