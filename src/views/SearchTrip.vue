@@ -1,7 +1,7 @@
 <template>
     <NavBar/>
     <div class="hero">
-        <div class="hero__container px-2 sm:px-4 py-2.5 fixed w-full">
+        <div class="hero__container px-2 sm:px-4 py-2.5 w-full">
             <h1 class="hero__container__title text-6xl font-bold text-white">Conduisez, voyagez,<br/> papotez !</h1>
         </div>
     </div>
@@ -100,5 +100,13 @@ export default {
     height: 100%;
     padding: 0 1rem;
     width: 75vw;
+}
+@media (max-width: 1200px) {
+    .search__container {
+        flex-direction: column;
+    }
+    .search__container__input {
+        margin: 1rem 0;
+    }
 }
 </style>

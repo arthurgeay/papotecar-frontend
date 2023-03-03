@@ -31,6 +31,22 @@
                 <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">Dijon</p>
             </li>
         </ol>
+        <div class="resultElement_trip">
+            <div class="resultElement_trip__price">
+                <p class="font-bold">Price</p>
+                <p class="price">50€</p>
+            </div>
+            <div class="resultElement_trip__description">
+                <p class="font-bold">Description</p>
+                <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc sit amet
+                    aliquet
+                    tincidunt, nunc
+                    nisl aliquam nisl, eget aliquet nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquet tincidunt,
+                    nunc
+                    nisl aliquam nisl, eget aliquet nisl nisl sit amet nisl.</p>
+            </div>
+
+        </div>
         
         <div class="resultElement_information">
             <div class="resultElement_information__container">
@@ -41,6 +57,7 @@
                     <p>Didier</p>
                 </div>
             </div>
+            <button type="button" class="resultElement_information__button text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Réserver</button>
         </div>
     </div>
 </template>
@@ -63,22 +80,56 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    padding: 1rem;
+}
+.resultElement__container,
+.resultElement_trip {
+    margin: 0 1rem;
+}
+.resultElement_trip__description {
+    margin-top: 1rem;
 }
 .resultElement_information {
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.resultElement_information__container {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    background-color: #000000;
+    padding: 1rem;
+    border-radius: .5rem;
+}
+.resultElement_information__button {
+    margin-top: 1rem;
 }
 .resultElement_information__container__profilePicture {
     display: flex;
     justify-content: center;
+    min-width: 5rem;
 }
 .resultElement_information__container__name {
     display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 1rem;
 }
 .resultElement_information__container img {
     border-radius: 50%;
+}
+@media (max-width: 1200px) {
+    .resultElement {
+        flex-direction: column;
+    }
+    .resultElement_trip {
+        margin: 0;
+    }
+    .resultElement_information {
+        margin-top: 1rem;
+    }
 }
 </style>
