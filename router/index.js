@@ -1,7 +1,13 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import CreateTrip from '../views/CreateTrip.vue';
+import SearchTrip from '../src/views/SearchTrip.vue';
+import CreateTrip from '../src/views/CreateTrip.vue';
 
 const routes = [
+    {
+      path: '/',
+      name: 'Search Trip',
+      component: SearchTrip,
+    },
     {
       path: '/:catchAll(.*)*',
       name: 'Not Found',
@@ -13,11 +19,11 @@ const routes = [
       component: CreateTrip,
     },
   ];
-
+  
   const router = createRouter({
     history: createWebHistory(),
     routes,
   });
-
-
+  
+  
   export default router;
