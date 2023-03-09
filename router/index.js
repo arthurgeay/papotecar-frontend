@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import SearchTrip from '../src/views/SearchTrip.vue';
+import CreateTrip from '../src/views/CreateTrip.vue';
 
 const routes = [
     {
@@ -11,6 +12,11 @@ const routes = [
       path: '/:catchAll(.*)*',
       name: 'Not Found',
       component: '<h1>404 Not Found</h1>',
+    },
+    {
+      path: '/new-trip',
+      name: 'Not Found',
+      component: CreateTrip,
     },
   ];
   
