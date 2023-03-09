@@ -111,7 +111,7 @@ export default {
                         'Authorization': 'Bearer Y2xmMHlueGgzMDAwMDFoMGI1cmd5NGZ3Yg.FpKGAsZaHjhWNh7wnQ7r9IM4OQCQiux-LmQ-rGT_jceOLP3dr3bmzb3B3npT'
                     }
                 })
-                .then((res) => {
+                .then(() => {
                     this.$router.push('/')
                 })
                 .catch(e => console.log('ERROOOOR', e))
