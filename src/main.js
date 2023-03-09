@@ -1,9 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import Login from './views/Login.vue'
-import Register from './views/Register.vue'
+import router from '../router'
 
 import './style.css'
 import 'flowbite'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+app.use(router)
+app.mount('#app')
