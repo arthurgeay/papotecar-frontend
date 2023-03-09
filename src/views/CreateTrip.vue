@@ -1,7 +1,8 @@
 <template>
-<div class="create-trip flex justify-center w-screen">
+<NavBar />
+<div class="create-trip flex justify-center items-center w-screen h-screen">
     <div class="block lg:w-2/6 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-        <h2 cclass="text-gray-500 dark:text-gray-400">Creer un trajet</h2>
+        <h2 class="text-gray-500 dark:text-gray-400">Creer un trajet</h2>
         <form>
             <div class="flex items-center mb-6">
                 <InputAutocomplete
@@ -53,7 +54,7 @@
                 <label 
                     for="message" 
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre message</label>
-                <textarea v-model="trip.content" id="message" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ecrivez ici..."></textarea>
+                <textarea id="message" v-model="trip.content" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ecrivez ici..."></textarea>
             </div>
 
             <button 
@@ -67,12 +68,14 @@
 
 <script>
 import axios from 'axios'
+import NavBar from '../components/NavBar.vue'
 import InputAutocomplete from '../components/InputAutocomplete.vue'
 
 export default {
     name: 'CreateTrip',
     components: {
-        InputAutocomplete
+        InputAutocomplete,
+        NavBar
     },
     data() {
         return {
