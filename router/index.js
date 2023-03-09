@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import SearchTrip from '../src/views/SearchTrip.vue';
 import CreateTrip from '../src/views/CreateTrip.vue';
-import UpdateTrip from '../src/views/UpdateTrip.vue'
+import UpdateTrip from '../src/views/UpdateTrip.vue';
 
 const routes = [
     {
@@ -19,6 +19,7 @@ const routes = [
       name: 'Not Found',
       component: CreateTrip,
     },
+    {
       path: '/my-trips/:id',
       name: 'Update Trip',
       component: UpdateTrip

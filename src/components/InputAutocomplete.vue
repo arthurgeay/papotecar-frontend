@@ -57,12 +57,19 @@ const city = ref();
 const cities = ref();
 const citySelected = ref();
 
-defineProps({
+const props = defineProps({
   name: {
     type: String,
     required: true,
   },
+  lastedCity: {
+    type: String,
+    default: "",
+    required: false
+  }
 });
+
+city.value = props.lastedCity || "";
 
 const emit = defineEmits(["citySelected"]);
 

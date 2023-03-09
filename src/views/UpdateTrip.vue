@@ -9,11 +9,13 @@
                     name="Lieu de départ"
                     class="flex-1"
                     @citySelected="(e) => (trip.departure_location = e)"
+                    :lastedCity="trip.departure_location.name"
                 />
                 <InputAutocomplete
                     name="Lieu d'arrivée"
                     class="ml-8 flex-1"
                     @citySelected="(e) => (trip.arrival_location = e)"
+                    :lastedCity="trip.arrival_location.name"
                 />
             </div>
 
@@ -102,9 +104,14 @@ export default {
         }
     },
     methods: {
+        getTrip() {
+            axios.get(`${import.meta.env.API_PAPOTECAR}/trips`)
+                .then(res => this.trip = res.data)
+        },
+
         saveTrip() {
-            this.trip.departure_datetime = new Date(document.querySelector('.datepicker-input').value).toISOString()
-            axios.post('https://papotecar-backend.onrender.com/trips', this.trip , 
+            this.trip.departure_datetime = new Date(document.querySelector('.datepicker-input').value).toISOString() || ""
+            axios.post(`${import.meta.env.API_PAPOTECAR}/trips`, this.trip , 
                 {
                     headers: {
                         'Content-Type': 'application/json',
