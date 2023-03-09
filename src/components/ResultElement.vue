@@ -1,6 +1,6 @@
 <template>
     <div class="resultElement">
-        <!-- add hour of departure, hour of arrival, starting location, ending location, name of the conductor and the profile picture of the conductor -->
+        <div class="resultElement__frame max-w-m p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <ol class="resultElement__container relative border-l border-gray-200 dark:border-gray-700">
             <li class="mb-10 ml-6">
                 <span
@@ -12,9 +12,8 @@
                             clip-rule="evenodd"></path>
                     </svg>
                 </span>
-                <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">20H32
-                </h3>
-                <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">Paris</p>
+                <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">{{ result.departure_datetime }}</h3>
+                <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">{{ result.departure_location.name }}</p>
             </li>
             <li class="ml-6">
                 <span
@@ -28,26 +27,21 @@
                 </span>
                 <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">23H45
                 </h3>
-                <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">Dijon</p>
+                <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">{{ result.arrival_location.name }}</p>
             </li>
         </ol>
         <div class="resultElement_trip">
             <div class="resultElement_trip__passagers">
-                <p class="font-bold">Nombre de passagers</p>
-                <p class="number">2</p>
+                <p class="font-bold">Nombre de passagers maximum</p>
+                <p class="number">{{ result.max_passengers }}</p>
             </div>
             <div class="resultElement_trip__price">
-                <p class="font-bold">Price</p>
-                <p class="price">50€</p>
+                <p class="font-bold">Prix</p>
+                <p class="price">{{result.price}}€</p>
             </div>
             <div class="resultElement_trip__description">
                 <p class="font-bold">Description</p>
-                <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc sit amet
-                    aliquet
-                    tincidunt, nunc
-                    nisl aliquam nisl, eget aliquet nisl nisl sit amet nisl. Sed euismod, nunc sit amet aliquet tincidunt,
-                    nunc
-                    nisl aliquam nisl, eget aliquet nisl nisl sit amet nisl.</p>
+                <p class="description">{{ result.content }}</p>
             </div>
 
         </div>
@@ -55,14 +49,15 @@
         <div class="resultElement_information">
             <div class="resultElement_information__container">
                 <div class="resultElement_information__container__profilePicture">
-                    <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" alt="profile picture">
+                    <img :src="'https://i.pravatar.cc/150?u='+ result.driver.id" alt="profile picture">
                 </div>
                 <div class="resultElement_information__container__name">
-                    <p>Didier</p>
+                    <p>{{result.driver.fullname}}</p>
                 </div>
             </div>
             <button type="button" class="resultElement_information__button text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Réserver</button>
         </div>
+    </div>
     </div>
 </template>
 
@@ -74,6 +69,9 @@ export default {
             type: Object,
             required: true
         }
+    },
+    mounted() {
+        this.result.departure_datetime = this.result.departure_datetime.split("T")[1].split(":")[0] + "H" + this.result.departure_datetime.split("T")[1].split(":")[1];
     }
 };
 </script>
@@ -85,6 +83,10 @@ export default {
     justify-content: space-between;
     width: 100%;
     padding: 1rem;
+}
+.resultElement__frame {
+    display: flex;
+    flex-direction: row;
 }
 .resultElement__container,
 .resultElement_trip {
@@ -126,7 +128,7 @@ export default {
     border-radius: 50%;
 }
 @media (max-width: 1200px) {
-    .resultElement {
+    .resultElement__frame {
         flex-direction: column;
     }
     .resultElement_trip {
