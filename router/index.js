@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import SearchTrip from '../src/views/SearchTrip.vue';
+import UpdateTrip from '../src/views/UpdateTrip.vue'
 
 const routes = [
     {
@@ -12,6 +13,11 @@ const routes = [
       name: 'Not Found',
       component: '<h1>404 Not Found</h1>',
     },
+    {
+      path: '/my-trips/:id',
+      name: 'Update Trip',
+      component: UpdateTrip
+    }
   ];
   
   const router = createRouter({
