@@ -28,7 +28,7 @@
                                 <input id="password" required="" type="password" name="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="">
                             </div>
 
-                            <div class="flex items-start mb-6">
+                            <!-- <div class="flex items-start mb-6">
                                 <div class="flex items-center h-5">
                                     <input id="remember" aria-describedby="remember" name="remember" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border-gray-300 focus:ring-3 focus:ring-blue-300 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
                                 </div>
@@ -36,7 +36,7 @@
                                     <label for="remember" class="font-medium text-gray-900 dark:text-white">Se souvenir de moi</label>
                                 </div>
                                 <a class="ml-auto text-sm text-blue-700 dark:text-blue-500 hover:underline" href="/forgot-password/">Mot de passe oublié</a>
-                            </div>
+                            </div> -->
 
                             <button class="text-white font-medium rounded-lg text-base px-5 py-3 w-full sm:w-auto text-center mb-6 bg-blue-700" type="submit">
                                 <span class="flex justify-center items-center">Se connecter</span>
