@@ -64,12 +64,11 @@ export default {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + 'Y2xmYjY5bnM0MDAwMDFnNGcwbHhzZXlodg.T6VFmgUzf50EywAbWDjg0P6U98bLLPFIcdVxtcV3QQL9xGKx3eq-l4T1zUem'
+                    'Authorization': 'Bearer ' + 'Y2xmYm0xMmNrMDAwMDFnNHYxYWoyNnFpdw.Tonh5zrhmFE4qnW795KSZ_vWYOkgSB6_6xcNxYJqGqFG8HHltqRQNCrnZ3QS'
                 }
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     this.trips = data;
                 })
         }

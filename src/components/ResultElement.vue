@@ -8,7 +8,7 @@
                             <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                         </svg>
                     </span>
-                    <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">{{ result.departure_datetime }}</h3>
+                    <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">{{ departure_datetime }}</h3>
                     <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">{{ result.departure_location.name }}</p>
                 </li>
                 <li class="ml-6">
@@ -57,7 +57,8 @@
 export default {
     name: "ResultElement",
     data: () => ({
-        res: null
+        arrival_datetime: '00h00',
+        departure_datetime: '00h00'
     }),
     props: {
         result: {
@@ -67,20 +68,24 @@ export default {
     },
     mounted() {
         const res = JSON.parse(JSON.stringify(this.result))
-        this.result.departure_datetime = this.result.departure_datetime.split("T")[1].split(":")[0] + "H" + this.result.departure_datetime.split("T")[1].split(":")[1];
-        this.getData();
+        this.departure_datetime = res.departure_datetime.split("T")[1].split(":")[0] + "H" + res.departure_datetime.split("T")[1].split(":")[1];
+        this.getData(res);
     },
     methods: {
-         getData : async () => {
-            const coordinates = `${result.departure_location.coordinates.longitude},${result.departure_location.coordinates.latitude};${result.arrival_location.coordinates.longitude},${result.arrival_location.coordinates.latitude}`;
+        getData: async function (res) {
+            const coordinates = `${res.departure_location.coordinates.longitude},${res.departure_location.coordinates.latitude};${res.arrival_location.coordinates.longitude},${res.arrival_location.coordinates.latitude}`;
             const result = await fetch(
                 `https://api.mapbox.com/directions/v5/mapbox/driving/${coordinates}?alternatives=false&geometries=geojson&language=fr-FR&overview=simplified&steps=true&access_token=${import.meta.env.VITE_API_MAPBOX_ACCESS_TOKEN
                 }`
             );
 
             const data = await result.json();
-            console.log({ result: data });
-            console.log(data.routes[0].distance.toLocaleString("fr-FR"));
+            const secondes = data.routes[0].duration;
+            const heures = Math.floor(secondes / 3600);
+            const minutes = Math.floor((secondes % 3600) / 60);
+            const heureFormat = heures < 10 ? `0${heures}` : heures;
+            const minuteFormat = minutes < 10 ? `0${minutes}` : minutes;
+            this.arrival_datetime = `${heureFormat}h${minuteFormat}`
         }
     }
 };
@@ -134,6 +139,8 @@ export default {
     display: flex;
     justify-content: center;
     min-width: 5rem;
+    height: 5rem;
+    width: 5rem;
 }
 
 .resultElement_information__container__name {
@@ -159,4 +166,5 @@ export default {
     .resultElement_information {
         margin-top: 1rem;
     }
-}</style>
+}
+</style>
