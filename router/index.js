@@ -12,12 +12,12 @@ const routes = [
     },
     {
       path: '/connexion',
-      name: 'LoginView',
+      name: 'Login',
       component: LoginView,
     },
     {
       path: '/inscription',
-      name: 'RegisterView',
+      name: 'Register',
       component: RegisterView,
     },
     {
@@ -27,7 +27,7 @@ const routes = [
     },
     {
       path: '/new-trip',
-      name: 'Not Found',
+      name: 'New trip',
       component: CreateTrip,
     },
   ];

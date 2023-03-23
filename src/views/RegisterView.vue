@@ -17,19 +17,18 @@
                     <div class="p-6 w-full sm:p-8 lg:p-10">
                         <h1 class="mb-3 text-2xl font-bold text-gray-900 lg:text-3xl dark:text-white">Inscription</h1>
                         <p class="mb-3 text-gray-500 dark:text-gray-400">Rejoignez le réseau de covoiturage gratuitement !</p>
-                
-                        <form class="mt-8">
+                        <form class="mt-8" @submit.prevent="submit">
                             <div class="mb-6">
-                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
-                                <input id="name" required="" type="text" name="name" placeholder="Didier Le Tronçonneur" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="">
+                                <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
+                                <input id="fullname" required="" type="text" name="fullname" v-model="form.fullname" placeholder="Didier Le Tronçonneur" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             </div>
                             <div class="mb-6">
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                                <input id="email" required="" type="email" name="email" placeholder="name@gmail.com" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="">
+                                <input id="email" required="" type="email" name="email" v-model="form.email" placeholder="name@gmail.com" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             </div>
                             <div class="mb-6">
                                 <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mot de passe</label>
-                                <input id="password" required="" type="password" name="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="">
+                                <input id="password" required="" type="password" name="password" v-model="form.password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             </div>
 
                             <div class="flex items-start mb-6">
@@ -58,3 +57,35 @@
         </main>   
     </div> 
 </template>
+<script>
+import { mapActions } from "vuex";
+
+export default {
+    
+    data() {
+        return {
+            form: {
+                fullname: '',
+                email: '',
+                password: '',
+            },
+            showError: false
+        };
+    },
+    methods: {
+            ...mapActions(["Register"]),
+    async submit() {
+      try {
+        await this.Register(this.form);
+        this.$router.push("/register");
+        this.showError = false
+      } catch (error) {
+        this.showError = true
+      }
+    },
+    },
+}
+
+</script>
+
+
