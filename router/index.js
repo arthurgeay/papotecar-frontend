@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import SearchTrip from '../src/views/SearchTrip.vue';
-import Login from '../src/views/Login.vue';
-import Register from '../src/views/Register.vue';
+import LoginView from '../src/views/LoginView.vue';
+import RegisterView from '../src/views/RegisterView.vue';
 
 const routes = [
     {
@@ -11,13 +11,13 @@ const routes = [
     },
     {
       path: '/connexion',
-      name: 'Login',
-      component: Login,
+      name: 'LoginView',
+      component: LoginView,
     },
     {
       path: '/inscription',
-      name: 'Register',
-      component: Register,
+      name: 'RegisterView',
+      component: RegisterView,
     },
     {
       path: '/:catchAll(.*)*',
