@@ -103,6 +103,7 @@ export default {
 .resultElement__frame {
     display: flex;
     flex-direction: row;
+    width: 100%;
 }
 @media (max-width: 600px) {
     .resultElement__frame {
@@ -135,6 +136,10 @@ export default {
 .resultElement__container,
 .resultElement_trip {
     margin: 0 1rem;
+}
+
+.resultElement_trip {
+    flex: 1;
 }
 
 .resultElement_trip>div:not(:last-child) {
