@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 
 const city = ref();
