@@ -9,10 +9,10 @@
         <form @submit.prevent="getTrips()">
             <div class="search__container max-w-m p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <div class="search__container__input">
-                    <AutoComplete name="Lieu de départ" @citySelected="(event)=>start=event.name"></AutoComplete>
+                    <AutoComplete name="Lieu de départ" @citySelected="(event) => start = event.name"></AutoComplete>
                 </div>
                 <div class="search__container__input">
-                    <AutoComplete name="Lieu d'arrivée" @citySelected="(event)=>end=event.name"></AutoComplete>
+                    <AutoComplete name="Lieu d'arrivée" @citySelected="(event) => end = event.name"></AutoComplete>
                 </div>
                 <div class="search__container__input">
                     <label for="starting-date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
@@ -30,6 +30,7 @@
     </div>
     <div class="result">
         <ResultElement :result="trip" v-for="trip in trips.data" :key="trip" />
+        <p class="no-result" v-if="typeof trips.meta !== 'undefined' && trips.meta.total === 0">Aucun résultat</p>
     </div>
 </template>
 
@@ -77,6 +78,10 @@ export default {
 </script>
 
 <style>
+.no-result {
+    margin: 4rem auto;
+    font-size: 2rem;
+}
 .hero {
     background-image: url("/assets/background.png");
     background-color: black;
@@ -125,6 +130,7 @@ export default {
     margin-top: 2rem;
     display: flex;
     flex-direction: column;
+    min-height: 25rem;
 }
 
 .result_container {
@@ -147,4 +153,5 @@ export default {
     .search__container__input {
         margin: 1rem 0;
     }
-}</style>
+}
+</style>
