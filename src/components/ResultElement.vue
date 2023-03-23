@@ -104,7 +104,34 @@ export default {
     display: flex;
     flex-direction: row;
 }
+@media (max-width: 600px) {
+    .resultElement__frame {
+        flex-direction: column;
+    }
+    .resultElement__container {
+        display: flex;
+        justify-content: space-between;
+        border: none;
+    }
+    .resultElement__container .ml-6:not(.mb-10) {
+        order: 2;
+    }
+    .resultElement__container::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 1px;
+        margin: 1rem;
+        border: 1px solid #e5e7eb;
+    }
+}
 
+@media (max-width: 1200px) and (min-width: 600px) {
+    .resultElement__frame {
+        display: grid;
+        grid-template-columns: 10rem 1fr;
+    }
+}
 .resultElement__container,
 .resultElement_trip {
     margin: 0 1rem;

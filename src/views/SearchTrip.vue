@@ -64,7 +64,7 @@ export default {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + 'Y2xmYm0xMmNrMDAwMDFnNHYxYWoyNnFpdw.Tonh5zrhmFE4qnW795KSZ_vWYOkgSB6_6xcNxYJqGqFG8HHltqRQNCrnZ3QS'
+                    'Authorization': 'Bearer ' + 'Y2xma3V2Y29qMDAwMDFoMnlnZno1ODhoeg.6b5PpWkdSiaHwoTwDyhy20N1lwzGhm8b14Fh4YxaMeDwTtr4MVuxx0uaIq0-'
                 }
             })
                 .then(response => response.json())
