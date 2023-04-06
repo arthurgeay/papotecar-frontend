@@ -115,7 +115,7 @@ export default {
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' //+ TOKEN 
+                        'Authorization': `Bearer ${this.$store.getters.getToken}`, 
                     }
                 })
                 .then(() => {
