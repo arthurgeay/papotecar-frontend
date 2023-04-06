@@ -10,14 +10,14 @@
           <AutoComplete
             name="Lieu de départ"
             class="flex-1"
+            :initial-city="trip.departure_location"
             @citySelected="(e) => (trip.departure_location = e)"
-            :initialCity="trip.departure_location"
           />
           <AutoComplete
             name="Lieu d'arrivée"
             class="ml-8 flex-1"
+            :initial-city="trip.arrival_location"
             @citySelected="(e) => (trip.arrival_location = e)"
-            :initialCity="trip.arrival_location"
           />
         </div>
 
