@@ -102,10 +102,10 @@
                 >
                 <input
                   id="fullname"
+                  v-model="form.fullname"
                   required=""
                   type="text"
                   name="fullname"
-                  v-model="form.fullname"
                   placeholder="Didier Le Tronçonneur"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
                 />
@@ -118,10 +118,10 @@
                 >
                 <input
                   id="email"
+                  v-model="form.email"
                   required=""
                   type="email"
                   name="email"
-                  v-model="form.email"
                   placeholder="name@gmail.com"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
                 />
@@ -134,10 +134,10 @@
                 >
                 <input
                   id="password"
+                  v-model="form.password"
                   required=""
                   type="password"
                   name="password"
-                  v-model="form.password"
                   placeholder="••••••••"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
                 />

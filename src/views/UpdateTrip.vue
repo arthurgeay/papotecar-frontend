@@ -8,14 +8,14 @@
                 <InputAutocomplete
                     name="Lieu de départ"
                     class="flex-1"
+                    :lasted-city="trip.departure_location.name"
                     @citySelected="(e) => (trip.departure_location = e)"
-                    :lastedCity="trip.departure_location.name"
                 />
                 <InputAutocomplete
                     name="Lieu d'arrivée"
                     class="ml-8 flex-1"
+                    :lasted-city="trip.arrival_location.name"
                     @citySelected="(e) => (trip.arrival_location = e)"
-                    :lastedCity="trip.arrival_location.name"
                 />
             </div>
 
