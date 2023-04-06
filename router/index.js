@@ -35,7 +35,7 @@ const routes = [{
         name: 'MessagesView',
         component: MessagesView,
         meta: {
-            guest: true,
+            requiresAuth: true,
         },
     },
     {
