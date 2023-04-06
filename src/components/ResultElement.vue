@@ -56,16 +56,16 @@
 <script>
 export default {
     name: "ResultElement",
-    data: () => ({
-        arrival_datetime: '00h00',
-        departure_datetime: '00h00'
-    }),
     props: {
         result: {
             type: Object,
             required: true
         }
     },
+    data: () => ({
+        arrival_datetime: '00h00',
+        departure_datetime: '00h00'
+    }),
     mounted() {
         const res = JSON.parse(JSON.stringify(this.result))
         this.departure_datetime = res.departure_datetime.split("T")[1].split(":")[0] + "H" + res.departure_datetime.split("T")[1].split(":")[1];
