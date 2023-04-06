@@ -9,13 +9,13 @@
                     name="Lieu de départ"
                     class="flex-1"
                     :lasted-city="trip.departure_location.name"
-                    @citySelected="(e) => (trip.departure_location = e)"
+                    @city-selected="(e) => (trip.departure_location = e)"
                 />
                 <InputAutocomplete
                     name="Lieu d'arrivée"
                     class="ml-8 flex-1"
                     :lasted-city="trip.arrival_location.name"
-                    @citySelected="(e) => (trip.arrival_location = e)"
+                    @city-selected="(e) => (trip.arrival_location = e)"
                 />
             </div>
 

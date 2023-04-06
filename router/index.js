@@ -2,12 +2,9 @@ import { createWebHistory, createRouter } from 'vue-router'
 import SearchTrip from '../src/views/SearchTrip.vue'
 import LoginView from '../src/views/LoginView.vue'
 import RegisterView from '../src/views/RegisterView.vue'
-import CreateTrip from '../src/views/CreateTrip.vue' <<
-<< << < HEAD
-import DashboardView from '../src/views/DashboardView.vue' ===
-=== =
-import MessagesView from '../src/views/MessagesView.vue' >>>
->>> > master
+import CreateTrip from '../src/views/CreateTrip.vue'
+import DashboardView from '../src/views/DashboardView.vue'
+import MessagesView from '../src/views/MessagesView.vue'
 import store from '../src/store'
 
 const routes = [{

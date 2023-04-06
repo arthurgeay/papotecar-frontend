@@ -16,13 +16,13 @@
         <div class="search__container__input">
           <AutoComplete
             name="Lieu de départ"
-            @citySelected="(event) => (start = event.name)"
+            @city-selected="(event) => (start = event.name)"
           ></AutoComplete>
         </div>
         <div class="search__container__input">
           <AutoComplete
             name="Lieu d'arrivée"
-            @citySelected="(event) => (end = event.name)"
+            @city-selected="(event) => (end = event.name)"
           ></AutoComplete>
         </div>
         <div class="search__container__input">

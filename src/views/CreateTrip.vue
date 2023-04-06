@@ -10,12 +10,12 @@
           <AutoComplete
             name="Lieu de départ"
             class="flex-1"
-            @citySelected="(e) => (trip.departure_location = e)"
+            @city-selected="(e) => (trip.departure_location = e)"
           />
           <AutoComplete
             name="Lieu d'arrivée"
             class="ml-8 flex-1"
-            @citySelected="(e) => (trip.arrival_location = e)"
+            @city-selected="(e) => (trip.arrival_location = e)"
           />
         </div>
 
