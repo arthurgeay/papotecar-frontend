@@ -17,9 +17,9 @@
 
       <div class="flex md:order-2">
         <button
-          @click="disconnect"
           type="button"
           class="inline-flex items-center rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+          @click="disconnect"
         >
           <svg
             fill="none"
@@ -80,7 +80,7 @@
           </li>
           <li>
             <a
-              href="#"
+              href="/dashboard"
               class="block rounded py-2 pl-3 pr-4 text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
               >Tableau de bord</a
             >

@@ -3,6 +3,7 @@ import SearchTrip from '../src/views/SearchTrip.vue'
 import LoginView from '../src/views/LoginView.vue'
 import RegisterView from '../src/views/RegisterView.vue'
 import CreateTrip from '../src/views/CreateTrip.vue'
+import DashboardView from '../src/views/DashboardView.vue'
 import store from '../src/store'
 
 const routes = [
@@ -10,6 +11,14 @@ const routes = [
     path: '/',
     name: 'Search Trip',
     component: SearchTrip,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: DashboardView,
     meta: {
       requiresAuth: true,
     },
