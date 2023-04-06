@@ -9,12 +9,12 @@ import 'flowbite'
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL
 
-axios.interceptors.response.use(undefined, function (error) {
+axios.interceptors.response.use(undefined, async function (error) {
   if (error) {
     const originalRequest = error.config
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
-      store.dispatch('logout')
+      await store.dispatch('logout')
       return router.push('/login')
     }
   }
