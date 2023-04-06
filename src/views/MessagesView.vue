@@ -16,13 +16,14 @@ import NavBar from "../components/NavBar.vue";
 export default {
     name: "MessagesView",
     data: () => ({
-        tripId: "5950102a-8b09-4de9-af78-ea61c8a9388a",
+        tripId: "",
         messages: [],
     }),
     components: {
         NavBar,
     },
     mounted() {
+        this.tripId = this.$route.params.id;
         this.getMessages();
     },
     methods: {

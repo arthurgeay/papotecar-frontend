@@ -21,7 +21,7 @@ const routes = [{
         component: RegisterView,
     },
     {
-        path: '/messages',
+        path: '/messages/:id',
         name: 'MessagesView',
         component: MessagesView,
     },
