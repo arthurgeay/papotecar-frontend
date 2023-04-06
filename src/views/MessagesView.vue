@@ -4,10 +4,13 @@
         <div class="messages-container">
             <div
 v-for="message in messages" id="toast-simple" :key="message" :class="initialId
-             === message.user_id ? 'conductor' : 'other'" class="toast-simple flex items-center w-full max-w-xs p-4 space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800" role="alert">
+                === message.user_id ? 'conductor' : 'other'" class="toast-simple flex items-center w-full max-w-xs p-4 space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800" role="alert">
                 <div class="text-sm font-normal">{{ message.content }}
                 </div>
-                <div class="toast-hour">{{ message.created_at.split('T')[1].substring(0, 5) }}</div>
+                <div class="toast-hour">
+                    <div class="toast-hour-name">{{ message.user.fullname }}</div>
+                    <div class="toast-hour-heure">{{ message.created_at.split('T')[1].substring(0, 5) }}</div>
+                </div>
             </div>
         </div>
         <div class="messages-send">
@@ -42,25 +45,26 @@ export default {
     },
     methods: {
         getMessages() {
-            fetch(`https://${import.meta.env.VITE_URL}/trips/${this.tripId}/messages`, {
+            fetch(`${import.meta.env.VITE_BASE_URL}trips/${this.tripId}/messages`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + import.meta.env.VITE_TOKEN_API
+                    'Authorization': `Bearer ${this.$store.getters.getToken}`,
                 }
             })
                 .then(response => response.json())
                 .then(data => {
                     this.messages = data;
                     this.initialId = data[0].user_id;
+                    console.log(data);
                 })
         },
         submitForm() {
-            fetch(`https://${import.meta.env.VITE_URL}/trips/${this.tripId}/messages`, {
+            fetch(`${import.meta.env.VITE_BASE_URL}trips/${this.tripId}/messages`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + import.meta.env.VITE_TOKEN_API
+                    'Authorization': `Bearer ${this.$store.getters.getToken}`,
                 },
                 body: JSON.stringify({
                     content: this.write
@@ -91,16 +95,25 @@ nav {
     right: -2.5rem;
     font-size: 12px;
     bottom: 0;
-    border: none!important;
+    border: none !important;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding:.3rem 0
 }
 
 .other {
     margin-left: auto;
+
 }
+
 .other .toast-hour {
     right: initial;
-    left: -3.5rem;
+    text-align: right;
+    left: -4.5rem;
 }
+
 .messages-container {
     margin: 50px 2rem 0 2rem;
 }
