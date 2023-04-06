@@ -11,10 +11,8 @@ axios.defaults.baseURL = import.meta.env.VITE_BASE_URL
 
 axios.interceptors.response.use(undefined, async function (error) {
   if (error) {
-    const originalRequest = error.config
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true
-      await store.dispatch('logout')
+    if (error.response.status === 401) {
+      await store.commit('setToken', null)
       return router.push('/login')
     }
   }
