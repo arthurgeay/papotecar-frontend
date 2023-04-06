@@ -42,25 +42,26 @@ export default {
     },
     methods: {
         getMessages() {
-            fetch(`https://${import.meta.env.VITE_URL}/trips/${this.tripId}/messages`, {
+            fetch(`${import.meta.env.VITE_BASE_URL}trips/${this.tripId}/messages`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + import.meta.env.VITE_TOKEN_API
+                    'Authorization': `Bearer ${this.$store.getters.getToken}`,
                 }
             })
                 .then(response => response.json())
                 .then(data => {
                     this.messages = data;
                     this.initialId = data[0].user_id;
+                    console.log(data[0]);
                 })
         },
         submitForm() {
-            fetch(`https://${import.meta.env.VITE_URL}/trips/${this.tripId}/messages`, {
+            fetch(`${import.meta.env.VITE_BASE_URL}trips/${this.tripId}/messages`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + import.meta.env.VITE_TOKEN_API
+                    'Authorization': `Bearer ${this.$store.getters.getToken}`,
                 },
                 body: JSON.stringify({
                     content: this.write
