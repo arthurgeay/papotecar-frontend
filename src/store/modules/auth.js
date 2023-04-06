@@ -4,6 +4,7 @@ const state = {
 }
 const getters = {
   isAuthenticated: (state) => !!state.token,
+  getToken: (state) => state.token,
 }
 const actions = {
   async register({ commit }, form) {
