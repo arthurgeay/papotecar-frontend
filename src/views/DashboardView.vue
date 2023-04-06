@@ -1,23 +1,41 @@
 <template>
-  <h2 class="text-4xl font-extrabold dark:text-white">Je suis passager</h2>
-  <h2 class="text-4xl font-extrabold dark:text-white">Je suis conducteur</h2>
+  <div class="tripsPassengers-div">
+    <h2 class="text-4xl font-extrabold dark:text-white">Je suis passager</h2>
+
+    <ResultElement
+      v-for="trip in tripsAsPassenger"
+      :key="trip"
+      :result="trip"
+    />
+  </div>
+
+  <p v-if="tripsAsPassenger.length === 0" class="no-result" color="white">
+    Aucun résultat
+  </p>
+
+  <div class="tripsDrivers-div">
+    <h2 class="text-4xl font-extrabold dark:text-white">Je suis conducteur</h2>
+    <ResultElement v-for="trip in tripsAsDriver" :key="trip" :result="trip" />
+    <p v-if="tripsAsDriver.length === 0" class="no-result" color="white">
+      Aucun résultat
+    </p>
+  </div>
 </template>
 
 <script>
   import axios from 'axios'
+  import ResultElement from '../components/ResultElement.vue'
 
   export default {
     name: 'DashboardView',
-    components: {},
+    components: { ResultElement },
     data: () => ({
-      trips: [],
+      tripsAsDriver: [],
+      tripsAsPassenger: [],
       user: {},
     }),
     mounted() {
-      if (this.trips.length === 0 && !this.user) {
-        console.log('on mounted')
-        this.getUserTrips()
-      }
+      this.getUserTrips()
     },
     methods: {
       async getUserTrips() {
@@ -27,9 +45,8 @@
           },
         })
 
-        console.log(response)
-
-        this.trips = response.data
+        this.tripsAsDriver = response.data.tripsAsDriver
+        this.tripsAsPassenger = response.data.tripsAsPassenger
       },
     },
   }
