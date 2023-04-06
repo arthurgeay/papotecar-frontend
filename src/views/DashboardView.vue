@@ -1,34 +1,41 @@
 <template>
-  <div class="tripsPassengers-div">
-    <h2 class="text-4xl font-extrabold dark:text-white">Je suis passager</h2>
+  <NavBar />
+  <section>
+    <div class="tripsPassengers-div">
+      <h2 class="text-5xl font-extrabold dark:text-white">Je suis passager</h2>
 
-    <ResultElement
-      v-for="trip in tripsAsPassenger"
-      :key="trip"
-      :result="trip"
-    />
-  </div>
+      <ResultElement
+        v-for="trip in tripsAsPassenger"
+        :key="trip"
+        :result="trip"
+      />
+    </div>
 
-  <p v-if="tripsAsPassenger.length === 0" class="no-result" color="white">
-    Aucun résultat
-  </p>
-
-  <div class="tripsDrivers-div">
-    <h2 class="text-4xl font-extrabold dark:text-white">Je suis conducteur</h2>
-    <ResultElement v-for="trip in tripsAsDriver" :key="trip" :result="trip" />
-    <p v-if="tripsAsDriver.length === 0" class="no-result" color="white">
+    <p v-if="tripsAsPassenger.length === 0" class="no-result" color="white">
       Aucun résultat
     </p>
-  </div>
+
+    <div class="tripsDrivers-div">
+      <h2 class="text-5xl font-extrabold dark:text-white">Je suis conducteur</h2>
+      <ResultElement v-for="trip in tripsAsDriver" :key="trip" :result="trip" />
+      <p v-if="tripsAsDriver.length === 0" class="no-result" color="white">
+        Aucun résultat
+      </p>
+    </div>
+  </section>
 </template>
 
 <script>
+  import NavBar from '../components/NavBar.vue'
   import axios from 'axios'
   import ResultElement from '../components/ResultElement.vue'
 
   export default {
     name: 'DashboardView',
-    components: { ResultElement },
+    components: { 
+      ResultElement,
+      NavBar 
+    },
     data: () => ({
       tripsAsDriver: [],
       tripsAsPassenger: [],
