@@ -7,52 +7,32 @@
       <h2 class="text-2xl font-bold text-white">Modifier mon trajet</h2>
       <form>
         <div class="mb-6 flex items-center">
-          <InputAutocomplete
+          <AutoComplete
             name="Lieu de départ"
             class="flex-1"
             @citySelected="(e) => (trip.departure_location = e)"
-            :lastedCity="trip.departure_location.name"
+            :initialCity="trip.departure_location"
           />
-          <InputAutocomplete
+          <AutoComplete
             name="Lieu d'arrivée"
             class="ml-8 flex-1"
             @citySelected="(e) => (trip.arrival_location = e)"
-            :lastedCity="trip.arrival_location.name"
+            :initialCity="trip.arrival_location"
           />
         </div>
 
         <div class="mb-6">
           <label
-            for="departure_time"
             class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
             >Date de départ</label
           >
-          <div class="relative">
-            <div
-              class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-            >
-              <svg
-                aria-hidden="true"
-                class="h-5 w-5 text-gray-500 dark:text-gray-400"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </div>
-            <input
-              id="departure_time"
-              datepicker
-              type="text"
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-              placeholder="Choisir la date"
-            />
-          </div>
+          <input
+            id="starting-date"
+            v-model="trip.departure_datetime"
+            type="date"
+            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            required
+          />
         </div>
 
         <div class="mb-6">
@@ -114,12 +94,13 @@
 <script>
   import axios from 'axios'
   import NavBar from '../components/NavBar.vue'
-  import InputAutocomplete from '../components/InputAutocomplete.vue'
+  import AutoComplete from '../components/AutoComplete.vue'
+  import { format } from 'date-fns'
 
   export default {
     name: 'UpdateTrip',
     components: {
-      InputAutocomplete,
+      AutoComplete,
       NavBar,
     },
     data() {
@@ -146,29 +127,40 @@
         },
       }
     },
+    async mounted() {
+      await this.getTrip()
+    },
     methods: {
-      getTrip() {
-        axios
-          .get(`${import.meta.env.API_PAPOTECAR}/trips`)
-          .then((res) => (this.trip = res.data))
+      async getTrip() {
+        const result = await axios.get(`trips/${this.$route.params.id}`, {
+          headers: {
+            Authorization: `Bearer ${this.$store.getters.getToken}`,
+          },
+        })
+
+        this.trip = result.data
+        this.trip.departure_datetime = format(
+          new Date(result.data.departure_datetime),
+          'yyyy-MM-dd'
+        )
       },
 
-      saveTrip() {
-        this.trip.departure_datetime =
-          new Date(
-            document.querySelector('.datepicker-input').value
-          ).toISOString() || ''
-        axios
-          .post(`${import.meta.env.API_PAPOTECAR}/trips`, this.trip, {
+      async saveTrip() {
+        this.trip.departure_datetime = new Date(
+          this.trip.departure_datetime
+        ).toISOString()
+
+        try {
+          await axios.put(`trips/${this.$route.params.id}`, this.trip, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${this.$store.getters.getToken}`,
             },
           })
-          .then(() => {
-            this.$router.push('/')
-          })
-          .catch((e) => console.log('ERROOOOR', e))
+          this.$router.push('/')
+        } catch (error) {
+          alert('Une erreur est survenue')
+        }
       },
     },
   }
