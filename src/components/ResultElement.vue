@@ -60,6 +60,9 @@
                 <div class="resultElement_information__container__name">
                     <p>Didier</p>
                 </div>
+                <button type="button" @click="subcribeToTraject" class="resultElement_information__button text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Réserver</button>
+                <font-awesome-icon class="load-icon mt-4 mb-2 hidden" :icon="['fas', 'spinner']" />
+                <font-awesome-icon class="check-icon bounceIn mt-4 mb-2 hidden" :icon="['fas', 'circle-check']" />
             </div>
             <button type="button" class="resultElement_information__button text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Réserver</button>
         </div>
@@ -67,12 +70,63 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: "ResultElement",
     props: {
         result: {
             type: Object,
             required: true
+        }
+    },
+    data: () => ({
+        arrival_datetime: '00h00',
+        departure_datetime: '00h00'
+    }),
+    mounted() {
+        const res = JSON.parse(JSON.stringify(this.result))
+        this.departure_datetime = res.departure_datetime.split("T")[1].split(":")[0] + "H" + res.departure_datetime.split("T")[1].split(":")[1];
+        this.getData(res);
+    },
+    methods: {
+        getData: async function (res) {
+            const coordinates = `${res.departure_location.coordinates.longitude},${res.departure_location.coordinates.latitude};${res.arrival_location.coordinates.longitude},${res.arrival_location.coordinates.latitude}`;
+            const result = await fetch(
+                `https://api.mapbox.com/directions/v5/mapbox/driving/${coordinates}?alternatives=false&geometries=geojson&language=fr-FR&overview=simplified&steps=true&access_token=${import.meta.env.VITE_API_MAPBOX_ACCESS_TOKEN
+                }`
+            );
+
+            const data = await result.json();
+            const secondes = data.routes[0].duration;
+            const heures = Math.floor(secondes / 3600);
+            const minutes = Math.floor((secondes % 3600) / 60);
+            const heureFormat = heures < 10 ? `0${heures}` : heures;
+            const minuteFormat = minutes < 10 ? `0${minutes}` : minutes;
+            this.arrival_datetime = `${heureFormat}h${minuteFormat}`
+        },
+
+        subcribeToTraject: async function () {
+            document.querySelector('.resultElement_information__button').classList.toggle('hidden')
+            document.querySelector('.load-icon').classList.toggle('hidden')
+
+            axios.post(`trips/${this.result.id}/passengers`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${this.$store.getters.getToken}` 
+                    }
+            })
+                .then(res => {
+                    console.log(res)
+                    document.querySelector('.load-icon').classList.toggle('hidden')
+                    document.querySelector('.check-icon').classList.toggle('hidden')
+                })
+                .catch(err => {
+                    console.log('ERROR:', err)
+                    document.querySelector('.load-icon').classList.toggle('hidden')
+                    document.querySelector('.resultElement_information__button').classList.toggle('hidden')
+                })
+
         }
     }
 };
@@ -136,4 +190,116 @@ export default {
         margin-top: 1rem;
     }
 }
+
+    .load-icon {
+        font-size: 28px;
+        color: #C1C1C1;
+        -webkit-animation-name: spinner;
+        animation-name: spinner;
+        -webkit-animation-duration: 1.5s;
+        animation-duration: 1.5s;
+        -webkit-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear; 
+        animation-timing-function: linear; 
+    }
+
+    @-webkit-keyframes spinner {
+        from {
+            transform:rotate(0deg);
+        }
+        to {
+            transform:rotate(360deg);
+        }
+    }
+    @keyframes spinner {
+        from {
+            transform:rotate(0deg);
+        }
+        to {
+            transform:rotate(360deg);
+        }
+    }
+
+    .check-icon {
+        font-size: 32px;
+        color: #82CD47;
+    }
+
+    .bounceIn {
+        -webkit-animation-name: bounceIn;
+        animation-name: bounceIn;
+        -webkit-animation-duration: .75s;
+        animation-duration: .75s;
+        -webkit-animation-duration: 1s;
+        animation-duration: 1s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+    }
+    @-webkit-keyframes bounceIn {
+        0%, 20%, 40%, 60%, 80%, 100% {
+            -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        }
+        0% {
+            opacity: 0;
+            -webkit-transform: scale3d(.3, .3, .3);
+            transform: scale3d(.3, .3, .3);
+        }
+        20% {
+            -webkit-transform: scale3d(1.1, 1.1, 1.1);
+            transform: scale3d(1.1, 1.1, 1.1);
+        }
+        40% {
+            -webkit-transform: scale3d(.9, .9, .9);
+            transform: scale3d(.9, .9, .9);
+        }
+        60% {
+            opacity: 1;
+            -webkit-transform: scale3d(1.03, 1.03, 1.03);
+            transform: scale3d(1.03, 1.03, 1.03);
+        }
+        80% {
+            -webkit-transform: scale3d(.97, .97, .97);
+            transform: scale3d(.97, .97, .97);
+        }
+        100% {
+            opacity: 1;
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+        }
+    }
+    @keyframes bounceIn {
+        0%, 20%, 40%, 60%, 80%, 100% {
+            -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        }
+        0% {
+        opacity: 0;
+            -webkit-transform: scale3d(.3, .3, .3);
+            transform: scale3d(.3, .3, .3);
+        }
+        20% {
+            -webkit-transform: scale3d(1.1, 1.1, 1.1);
+            transform: scale3d(1.1, 1.1, 1.1);
+        }
+        40% {
+            -webkit-transform: scale3d(.9, .9, .9);
+            transform: scale3d(.9, .9, .9);
+        }
+        60% {
+            opacity: 1;
+            -webkit-transform: scale3d(1.03, 1.03, 1.03);
+            transform: scale3d(1.03, 1.03, 1.03);
+        }
+        80% {
+            -webkit-transform: scale3d(.97, .97, .97);
+            transform: scale3d(.97, .97, .97);
+        }
+        100% {
+            opacity: 1;
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+        }
+    } 
 </style>
