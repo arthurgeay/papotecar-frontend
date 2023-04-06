@@ -1,12 +1,12 @@
 import axios from 'axios';
 const state = {
-    token : null
+    token: null
 };
 const getters = {
-    isAuthenticated: state => !!state.token,    
+    isAuthenticated: state => !!state.token,
 };
 const actions = {
-    async Register({dispatch}, form) {
+    async Register({ dispatch }, form) {
         await axios.post('register', form)
         let UserForm = new FormData()
         UserForm.append('fullname', form.fullname)
@@ -14,27 +14,27 @@ const actions = {
         UserForm.append('password', form.password)
         await dispatch('LogIn', UserForm)
     },
-    async LogIn({commit}, User) {
+    async LogIn({ commit }, User) {
         await axios.post('login', User)
-      await commit('setUser', User.get('fullname'))
-      this.$router.push('/')
-    },      
-    async LogOut({commit}){
+        await commit('setUser', User.get('fullname'))
+        this.$router.push('/')
+    },
+    async LogOut({ commit }) {
         let user = null
         commit('logout', user)
     }
 };
 const mutations = {
-    setUser(state, fullname){
+    setUser(state, fullname) {
         state.user = fullname
     },
-    LogOut(state){
+    LogOut(state) {
         state.user = null
     },
 };
 export default {
-  state,
-  getters,
-  actions,
-  mutations
+    state,
+    getters,
+    actions,
+    mutations
 };
