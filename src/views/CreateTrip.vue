@@ -5,12 +5,12 @@
         <h2 class="text-gray-500 dark:text-gray-400">Creer un trajet</h2>
         <form>
             <div class="flex items-center mb-6">
-                <InputAutocomplete
+                <AutoComplete
                     name="Lieu de départ"
                     class="flex-1"
                     @citySelected="(e) => (trip.departure_location = e)"
                 />
-                <InputAutocomplete
+                <AutoComplete
                     name="Lieu d'arrivée"
                     class="ml-8 flex-1"
                     @citySelected="(e) => (trip.arrival_location = e)"
@@ -69,12 +69,12 @@
 <script>
 import axios from 'axios'
 import NavBar from '../components/NavBar.vue'
-import InputAutocomplete from '../components/InputAutocomplete.vue'
+import AutoComplete from '../components/AutoComplete.vue'
 
 export default {
     name: 'CreateTrip',
     components: {
-        InputAutocomplete,
+        AutoComplete,
         NavBar
     },
     data() {
