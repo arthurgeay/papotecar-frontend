@@ -50,7 +50,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from "vue";
+import { ref, defineEmits, onMounted, watch } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 
 const city = ref();
@@ -69,7 +69,16 @@ const props = defineProps({
   }
 });
 
-city.value = props.lastedCity || "";
+// watch(props.lastedCity, (newVal) => {
+//   city.value = newVal
+// })
+
+// onMounted(async () => {
+//   city.value = await props.lastedCity;
+//   console.log("Lieu:",props.lastedCity)
+// })
+// LA VALEUR N'ARRIVE PAS DANS L'INPUT
+
 
 const emit = defineEmits(["citySelected"]);
 

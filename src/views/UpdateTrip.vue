@@ -107,15 +107,28 @@ export default {
             }
         }
     },
-    methods: {
-        getTrip() {
-            axios.get(`${import.meta.env.API_PAPOTECAR}/trips`)
-                .then(res => this.trip = res.data)
-        },
+    async mounted() {
+        console.log(this.$route.params.id)
+        await axios.get(`${import.meta.env.VITE_API_PAPOTECAR}/trips/${this.$route.params.id}`, 
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '//+ TOKEN 
+                }
+            })
+            .then(async res => {
+                this.trip = await res.data
+                const dd = this.trip.departure_datetime
+                document.querySelector("#departure_time").value = dd.substring(0,10).replaceAll("-","/")
+            })
+            .catch(e => console.log('ERROR:',e))
 
+        console.log(this.trip.departure_location.name)
+    },
+    methods: {
         saveTrip() {
             this.trip.departure_datetime = new Date(document.querySelector('.datepicker-input').value).toISOString() || ""
-            axios.post(`${import.meta.env.API_PAPOTECAR}/trips`, this.trip , 
+            axios.post(`${import.meta.env.VITE_API_PAPOTECAR}/trips`, this.trip , 
                 {
                     headers: {
                         'Content-Type': 'application/json',
