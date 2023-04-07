@@ -18,7 +18,18 @@ axios.interceptors.response.use(undefined, async function (error) {
   }
 })
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import { faSpinner} from '@fortawesome/free-solid-svg-icons'
+
+
+library.add(faCircleCheck)
+library.add(faSpinner)
+
 const app = createApp(App)
+app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(store)
 app.use(router)
 app.mount('#app')
