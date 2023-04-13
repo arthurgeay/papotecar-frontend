@@ -19,7 +19,7 @@
         <h2 class="text-5xl font-extrabold dark:text-white">
           Je suis conducteur
         </h2>
-        <ResultElement
+        <ResultDriver
           v-for="trip in tripsAsDriver"
           :key="trip"
           :result="trip"
@@ -36,11 +36,13 @@
   import NavBar from '../components/NavBar.vue'
   import axios from 'axios'
   import ResultElement from '../components/ResultElement.vue'
+  import ResultDriver from '../components/ResultDriver.vue'
 
   export default {
     name: 'DashboardView',
     components: {
       ResultElement,
+      ResultDriver,
       NavBar,
     },
     data: () => ({
