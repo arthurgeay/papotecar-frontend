@@ -96,6 +96,7 @@
           type="button"
           @click="subcribeToTraject"
           class="resultElement_information__button mr-2 mb-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          :class="(imPassengers || imDriver) ? 'hidden' : ''"
         >
           Réserver
         </button>
@@ -104,7 +105,8 @@
           :icon="['fas', 'spinner']"
         />
         <font-awesome-icon
-          class="check-icon bounceIn mt-4 mb-2 hidden"
+          class="check-icon bounceIn mt-4 mb-2"
+          :class="(imPassengers) ? '' : 'hidden'"
           :icon="['fas', 'circle-check']"
         />
       </div>
@@ -125,6 +127,8 @@
     data: () => ({
       arrival_datetime: '00h00',
       departure_datetime: '00h00',
+      imPassengers: false,
+      imDriver: false,
     }),
     mounted() {
       const res = JSON.parse(JSON.stringify(this.result))
@@ -150,6 +154,14 @@
         const heureFormat = heures < 10 ? `0${heures}` : heures
         const minuteFormat = minutes < 10 ? `0${minutes}` : minutes
         this.arrival_datetime = `${heureFormat}h${minuteFormat}`
+
+        this.imDriver = (this.result.driver.id == this.$store.getters.getUser?.id) ? true : false
+
+        this.result.passengers.forEach(pas => {
+            if (this.$store.getters.getUser?.id == pas.id) {
+                this.imPassengers = true;
+            }
+        });
       },
 
       subcribeToTraject: async function () {
