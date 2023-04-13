@@ -17,7 +17,7 @@
         </h2>
         <TripPassengerDetail v-for="trip in tripsAsPassenger" :key="trip" :result="trip" />
       </div>
-      <p v-if="tripsAsPassenger.length === 0" class="no-result" color="white">
+      <p v-if="tripsAsPassenger.length === 0" class="no-result text-white">
         Aucun résultat
       </p>
       <div class="tripsDrivers-div">
