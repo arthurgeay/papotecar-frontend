@@ -97,21 +97,20 @@
         <button
           type="button"
           class="mr-2 mb-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          @click="deleteTrip()"
         >
           Passagers
         </button>
         <button
           type="button"
           class="mr-2 mb-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-          @click="deleteTrip()"
+          @click="updateTrip(result.id)"
         >
           Modifier
         </button>
         <button
           type="button"
           class="mr-2 mb-2 rounded-lg border border-red-700 px-5 py-2.5 text-center text-sm font-medium text-red-700 hover:bg-red-800 hover:text-white focus:outline-none focus:ring-4 focus:ring-red-300 dark:border-red-500 dark:text-red-500 dark:hover:bg-red-600 dark:hover:text-white dark:focus:ring-red-900"
-          @click="deleteTrip()"
+          @click="deleteTrip(result.id)"
         >
           Supprimer
         </button>
@@ -169,7 +168,15 @@
       goToMessages(tripId) {
         this.$router.push(`messages/${tripId}`)
       },
-      async updateTrip(tripId) {},
+
+      async updateTrip(tripId) {
+        await axios.put(`trips/${tripId}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.$store.getters.getToken}`,
+          },
+        })
+      },
       async deleteTrip(tripId) {
         try {
           await axios.delete(`trips/${tripId}`, {
