@@ -27,7 +27,7 @@
           <span class="sr-only">Open user menu</span>
           <img
             class="h-8 w-8 rounded-full"
-            src="/docs/images/people/profile-picture-3.jpg"
+            :src="`https://i.pravatar.cc/150?u=${$store.getters.getUser?.id}`"
             alt="user photo"
           />
         </button>
