@@ -170,12 +170,7 @@
       },
 
       async updateTrip(tripId) {
-        await axios.put(`trips/${tripId}`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.$store.getters.getToken}`,
-          },
-        })
+        this.$router.push(`trips/${tripId}`)
       },
       async deleteTrip(tripId) {
         try {
