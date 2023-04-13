@@ -2,7 +2,7 @@
   <NavBar />
   <div class="create-trip flex h-screen w-screen items-center justify-center">
     <div
-      class="block rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 lg:w-1/2"
+      class="block rounded-lg border border-gray-200 p-6 shadow dark:border-gray-700 dark:bg-gray-800 lg:w-1/2"
     >
       <h2 class="text-2xl font-bold text-white">Creer un trajet</h2>
       <form>
@@ -77,13 +77,18 @@
           ></textarea>
         </div>
 
-        <button
-          type="button"
-          class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
-          @click="saveTrip"
-        >
-          Enregistrer
-        </button>
+        <div class="flex">
+          <button
+            type="button"
+            class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
+            @click="saveTrip"
+          >
+            Enregistrer
+          </button>
+          <router-link to="/dashboard" class="block ml-8">
+              <button type="button" class="return w-fulltext-gray-900 m-0 px-5 py-2.5 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Annuler</button>
+          </router-link>
+        </div>
       </form>
     </div>
   </div>
