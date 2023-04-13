@@ -35,8 +35,8 @@
 <script>
   import NavBar from '../components/NavBar.vue'
   import axios from 'axios'
-  import ResultElement from '../components/ResultElement.vue'
-  import ResultDriver from '../components/ResultDriver.vue'
+  import ResultElement from '../components/TripPassengerDetail.vue'
+  import ResultDriver from '../components/TripDriverDetail.vue'
 
   export default {
     name: 'DashboardView',
