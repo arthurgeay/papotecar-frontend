@@ -2,8 +2,7 @@
     <div class="messages">
         <NavBar />
         <div class="messages-container">
-            <div
-v-for="message in messages" id="toast-simple" :key="message" :class="initialId
+            <div v-for="message in messages" id="toast-simple" :key="message" :class="initialId
                 === message.user_id ? 'conductor' : 'other'" class="toast-simple flex items-center w-full max-w-xs p-4 space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800" role="alert">
                 <div class="text-sm font-normal">{{ message.content }}
                 </div>
@@ -26,6 +25,7 @@ v-for="message in messages" id="toast-simple" :key="message" :class="initialId
 </template>
 
 <script>
+import Pusher from "pusher-js";
 import NavBar from "../components/NavBar.vue";
 
 export default {
@@ -41,7 +41,19 @@ export default {
     }),
     mounted() {
         this.tripId = this.$route.params.id;
+        // this.initPusher();
         this.getMessages();
+        // this.getNewMessages();
+        const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
+            cluster: "eu",
+        })
+        const channel = pusher.subscribe(this.tripId);
+        channel.bind("newMessage", (data) => {
+            this.messages.push(data.message)
+        });
+    },
+    onDestroy() {
+        this.pusher.disconnect();
     },
     methods: {
         getMessages() {
@@ -56,7 +68,6 @@ export default {
                 .then(data => {
                     this.messages = data;
                     this.initialId = data[0].user_id;
-                    console.log(data);
                 })
         },
         submitForm() {
@@ -72,7 +83,6 @@ export default {
             })
                 .then(() => {
                     this.write = '';
-                    this.getMessages();
                 })
         }
     }
@@ -100,7 +110,7 @@ nav {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding:.3rem 0
+    padding: .3rem 0
 }
 
 .other {
@@ -115,7 +125,7 @@ nav {
 }
 
 .messages-container {
-    margin: 50px 2rem 0 2rem;
+    margin: 50px 2rem 8rem 2rem;
 }
 
 .messages-send {
@@ -123,5 +133,6 @@ nav {
     bottom: 0;
     width: 100%;
     padding: 1rem;
+    background-color: #111928;
 }
 </style>
