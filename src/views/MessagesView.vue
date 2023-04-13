@@ -1,6 +1,9 @@
 <template>
     <div class="messages">
         <NavBar />
+        <router-link to="/dashboard" class="block">
+            <button type="button" class="return text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Retour au tableau de bord</button>
+        </router-link>
         <div class="messages-container">
             <div v-for="message in messages" id="toast-simple" :key="message" :class="initialId
                 === message.user_id ? 'conductor' : 'other'" class="toast-simple flex items-center w-full max-w-xs p-4 space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800" role="alert">
@@ -124,6 +127,10 @@ nav {
     left: -4.5rem;
 }
 
+.messages .return {
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
 .messages-container {
     margin: 50px 2rem 8rem 2rem;
 }
