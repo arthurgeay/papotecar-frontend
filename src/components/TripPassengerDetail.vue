@@ -46,8 +46,8 @@
                         <p>{{ result.driver.fullname }}</p>
                     </div>
                 </div>
-                <button type="button" class="w-full resultElement_information__button text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Se désinscrire</button>
-                <button type="button" class="w-full resultElement_information__button text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Messagerie</button>
+                <button type="button" class="w-full mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Messagerie</button>
+                <button type="button" class="w-full mt-2 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Se désinscrire</button>
             </div>
         </div>
     </div>
@@ -161,10 +161,6 @@ export default {
     background-color: #000000;
     padding: 1rem;
     border-radius: .5rem;
-}
-
-.resultElement_information__button {
-    margin-top: 1rem;
 }
 
 .resultElement_information__container__profilePicture {
