@@ -13,6 +13,8 @@ axios.interceptors.response.use(undefined, async function (error) {
   if (error) {
     if (error.response.status === 401) {
       await store.commit('setToken', null)
+      await store.commit('setUser', null)
+
       return router.push('/login')
     }
   }
