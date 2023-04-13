@@ -6,7 +6,7 @@
         <h2 class="text-5xl font-extrabold dark:text-white">
           Je suis passager
         </h2>
-        <ResultElement
+        <TripPassengerDetail
           v-for="trip in tripsAsPassenger"
           :key="trip"
           :result="trip"
@@ -19,7 +19,7 @@
         <h2 class="text-5xl font-extrabold dark:text-white">
           Je suis conducteur
         </h2>
-        <ResultDriver
+        <TripDriverDetail
           v-for="trip in tripsAsDriver"
           :key="trip"
           :result="trip"
@@ -35,14 +35,14 @@
 <script>
   import NavBar from '../components/NavBar.vue'
   import axios from 'axios'
-  import ResultElement from '../components/TripPassengerDetail.vue'
-  import ResultDriver from '../components/TripDriverDetail.vue'
+  import TripPassengerDetail from '../components/TripPassengerDetail.vue'
+  import TripDriverDetail from '../components/TripDriverDetail.vue'
 
   export default {
     name: 'DashboardView',
     components: {
-      ResultElement,
-      ResultDriver,
+      TripPassengerDetail,
+      TripDriverDetail,
       NavBar,
     },
     data: () => ({
