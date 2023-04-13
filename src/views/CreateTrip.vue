@@ -125,22 +125,22 @@
       }
     },
     methods: {
-      saveTrip() {
+      async saveTrip() {
         this.trip.departure_datetime = new Date(
           this.trip.departure_datetime
         ).toISOString()
 
-        axios
-          .post('trips', this.trip, {
+        try {
+          await axios.post('trips', this.trip, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${this.$store.getters.getToken}`,
             },
           })
-          .then(() => {
-            this.$router.push('/')
-          })
-          .catch((e) => console.log('ERROOOOR', e))
+          this.$router.push('/')
+        } catch (error) {
+          alert('Une erreur est survenue')
+        }
       },
     },
   }
