@@ -70,6 +70,12 @@
           <p class="font-bold">Nombre de passagers maximum</p>
           <p class="number">{{ result.max_passengers }}</p>
         </div>
+        <div class="resultElement_trip__date">
+          <p class="font-bold">Date de départ</p>
+          <p>
+            {{ new Date(result.departure_datetime).toLocaleDateString() }}
+          </p>
+        </div>
         <div class="resultElement_trip__price">
           <p class="font-bold">Prix</p>
           <p class="price">{{ result.price }}€</p>
@@ -96,8 +102,9 @@
         </div>
         <button
           type="button"
-          data-modal-target="passengers-modal"
-          data-modal-toggle="passengers-modal"
+          :data-modal-target="`passengers-modal-${result.id}`"
+          :data-modal-toggle="`passengers-modal-${result.id}`"
+          @click="getTrip(result.id)"
           class="mt-2 w-full rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Passagers
@@ -118,15 +125,15 @@
         </button>
         <button
           type="button"
-          data-modal-target="delete-modal"
-          data-modal-toggle="delete-modal"
+          :data-modal-target="`delete-modal-${result.id}`"
+          :data-modal-toggle="`delete-modal-${result.id}`"
           class="mt-2 w-full rounded-lg border border-red-700 px-5 py-2.5 text-center text-sm font-medium text-red-700 hover:bg-red-800 hover:text-white focus:outline-none focus:ring-4 focus:ring-red-300 dark:border-red-500 dark:text-red-500 dark:hover:bg-red-600 dark:hover:text-white dark:focus:ring-red-900"
         >
           Supprimer
         </button>
 
         <div
-          id="passengers-modal"
+          :id="`passengers-modal-${result.id}`"
           tabindex="-1"
           aria-hidden="true"
           class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0"
@@ -137,12 +144,12 @@
                 class="flex items-start justify-between rounded-t border-b p-4 dark:border-gray-600"
               >
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                  Terms of Service
+                  Passagers
                 </h3>
                 <button
                   type="button"
                   class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
-                  data-modal-hide="passengers-modal"
+                  :data-modal-hide="`passengers-modal-${result.id}`"
                 >
                   <svg
                     aria-hidden="true"
@@ -161,40 +168,74 @@
                 </button>
               </div>
               <div class="space-y-6 p-6">
-                <p
-                  class="text-base leading-relaxed text-gray-500 dark:text-gray-400"
-                >
-                  With less than a month to go before the European Union enacts
-                  new consumer privacy laws for its citizens, companies around
-                  the world are updating their terms of service agreements to
-                  comply.
+                <p v-if="trip?.passengers.length === 0">
+                  Pas de passager pour le moment.
                 </p>
-                <p
-                  class="text-base leading-relaxed text-gray-500 dark:text-gray-400"
+                <div
+                  v-if="trip?.passengers.length > 0"
+                  class="relative overflow-x-auto shadow-md sm:rounded-lg"
                 >
-                  The European Union’s General Data Protection Regulation
-                  (G.D.P.R.) goes into effect on May 25 and is meant to ensure a
-                  common set of data rights in the European Union. It requires
-                  organizations to notify users as soon as possible of high-risk
-                  data breaches that could personally affect them.
-                </p>
+                  <table
+                    class="w-full text-left text-sm text-gray-500 dark:text-gray-400"
+                  >
+                    <thead
+                      class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
+                    >
+                      <tr>
+                        <th scope="col" class="px-6 py-3">Nom du passager</th>
+                        <th scope="col" class="px-6 py-3">
+                          <span class="sr-only">Edit</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="passenger in trip.passengers"
+                        :key="passenger.id"
+                        class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                      >
+                        <th
+                          scope="row"
+                          class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+                        >
+                          {{ passenger.fullname }}
+                        </th>
+                        <td class="px-6 py-4 text-right">
+                          <div v-if="!passenger.is_approved">
+                            <a
+                              href="#"
+                              class="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                              @click="approvePassenger(passenger.id)"
+                              >Accepter</a
+                            >
+                            |
+                            <a
+                              href="#"
+                              class="font-medium text-red-600 hover:underline dark:text-red-500"
+                              @click="refusePassenger(passenger.id)"
+                              >Refuser</a
+                            >
+                          </div>
+                          <span
+                            v-else
+                            class="mr-2 rounded bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
+                            >Approuvé</span
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <div
                 class="flex items-center space-x-2 rounded-b border-t border-gray-200 p-6 dark:border-gray-600"
               >
                 <button
-                  data-modal-hide="passengers-modal"
+                  :data-modal-hide="`passengers-modal-${result.id}`"
                   type="button"
                   class="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  I accept
-                </button>
-                <button
-                  data-modal-hide="passengers-modal"
-                  type="button"
-                  class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
-                >
-                  Decline
+                  Fermer
                 </button>
               </div>
             </div>
@@ -202,7 +243,7 @@
         </div>
 
         <div
-          id="delete-modal"
+          :id="`delete-modal-${result.id}`"
           tabindex="-1"
           class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden p-4 md:inset-0"
         >
@@ -211,7 +252,7 @@
               <button
                 type="button"
                 class="absolute right-2.5 top-3 ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-white"
-                data-modal-hide="delete-modal"
+                :data-modal-hide="`delete-modal-${result.id}`"
               >
                 <svg
                   aria-hidden="true"
@@ -251,14 +292,14 @@
                 </h3>
                 <button
                   @click="deleteTrip(result.id)"
-                  data-modal-hide="delete-modal"
+                  :data-modal-hide="`delete-modal-${result.id}`"
                   type="button"
                   class="mr-2 inline-flex items-center rounded-lg bg-red-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:focus:ring-red-800"
                 >
                   Supprimer le trajet
                 </button>
                 <button
-                  data-modal-hide="delete-modal"
+                  :data-modal-hide="`delete-modal-${result.id}`"
                   type="button"
                   class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
                 >
@@ -276,6 +317,7 @@
 <script>
   import { initModals } from 'flowbite'
   import axios from 'axios'
+
   export default {
     name: 'ResultElement',
     props: {
@@ -287,9 +329,11 @@
     data: () => ({
       arrival_datetime: '00h00',
       departure_datetime: '00h00',
+      trip: null,
     }),
     mounted() {
       initModals()
+
       const res = JSON.parse(JSON.stringify(this.result))
       this.departure_datetime =
         res.departure_datetime.split('T')[1].split(':')[0] +
@@ -334,6 +378,44 @@
         }
 
         return this.$router.go(0)
+      },
+      async approvePassenger(passengerId) {
+        await axios.put(
+          `trips/${this.result.id}/passengers/${passengerId}/approve`,
+          null,
+          {
+            headers: {
+              Authorization: `Bearer ${this.$store.getters.getToken}`,
+            },
+          }
+        )
+
+        await this.getTrip(this.result.id)
+
+        this.$notyf.success('Passager accepté')
+      },
+      async refusePassenger(passengerId) {
+        await axios.delete(
+          `trips/${this.result.id}/passengers/${passengerId}/disapprove`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.$store.getters.getToken}`,
+            },
+          }
+        )
+
+        await this.getTrip(this.result.id)
+
+        this.$notyf.success('Passager supprimé')
+      },
+      async getTrip(tripId) {
+        const result = await axios.get(`trips/${tripId}`, {
+          headers: {
+            Authorization: `Bearer ${this.$store.getters.getToken}`,
+          },
+        })
+
+        this.trip = result.data
       },
     },
   }

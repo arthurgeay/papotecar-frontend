@@ -70,6 +70,12 @@
           <p class="font-bold">Nombre de passagers maximum</p>
           <p class="number">{{ result.max_passengers }}</p>
         </div>
+        <div class="resultElement_trip__date">
+          <p class="font-bold">Date de départ</p>
+          <p>
+            {{ new Date(result.departure_datetime).toLocaleDateString() }}
+          </p>
+        </div>
         <div class="resultElement_trip__price">
           <p class="font-bold">Prix</p>
           <p class="price">{{ result.price }}€</p>
