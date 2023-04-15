@@ -85,8 +85,13 @@
           >
             Enregistrer
           </button>
-          <router-link to="/dashboard" class="block ml-8">
-              <button type="button" class="return w-fulltext-gray-900 m-0 px-5 py-2.5 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Annuler</button>
+          <router-link to="/dashboard" class="ml-8 block">
+            <button
+              type="button"
+              class="return w-fulltext-gray-900 m-0 mb-2 mr-2 rounded-lg border border-gray-300 bg-white px-5 px-5 py-2.5 py-2.5 text-sm font-medium hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+            >
+              Annuler
+            </button>
           </router-link>
         </div>
       </form>
@@ -142,7 +147,9 @@
               'Authorization': `Bearer ${this.$store.getters.getToken}`,
             },
           })
-          this.$router.push('/')
+          this.$notyf.success('Votre trajet a bien été enregistré')
+
+          this.$router.push('/dashboard')
         } catch (error) {
           alert('Une erreur est survenue')
         }
