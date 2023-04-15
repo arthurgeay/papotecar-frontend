@@ -2,7 +2,7 @@
   <div class="flex min-h-screen flex-col bg-white dark:bg-gray-900">
     <main class="bg-gray-50 dark:bg-gray-900">
       <div
-        class="mx-auto flex flex-col items-center justify-center py-8 px-6 md:h-screen"
+        class="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen"
       >
         <a
           class="mb-8 flex items-center justify-center text-3xl font-semibold dark:text-white lg:mb-10"
@@ -94,6 +94,8 @@
               Content de vous revoir ! Veuillez remplir le formulaire.
             </p>
 
+            <DangerAlert v-if="globalError" :error="globalError" />
+
             <form class="mt-8" @submit.prevent="onLogin">
               <div class="mb-6">
                 <label
@@ -110,6 +112,12 @@
                   placeholder="name@gmail.com"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
                 />
+                <p
+                  v-if="formErrors && formErrors.email"
+                  class="mt-2 text-sm text-red-600 dark:text-red-500"
+                >
+                  {{ formErrors.email }}
+                </p>
               </div>
               <div class="mb-6">
                 <label
@@ -126,6 +134,12 @@
                   placeholder="••••••••"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
                 />
+                <p
+                  v-if="formErrors && formErrors.password"
+                  class="mt-2 text-sm text-red-600 dark:text-red-500"
+                >
+                  {{ formErrors.password }}
+                </p>
               </div>
 
               <button
@@ -155,27 +169,42 @@
 
 <script>
   import { mapActions } from 'vuex'
+  import { formatErrors } from '../services/errors.js'
+  import DangerAlert from '../components/DangerAlert.vue'
 
   export default {
     name: 'LoginView',
+    components: {
+      DangerAlert,
+    },
     data() {
       return {
         form: {
           email: '',
           password: '',
         },
-        showError: false,
+        formErrors: {},
+        globalError: null,
       }
     },
     methods: {
       ...mapActions(['login']),
       async onLogin() {
         try {
+          this.formErrors = {}
+          this.globalError = null
+
           await this.login(this.form)
           this.$router.push('/')
-          this.showError = false
         } catch (error) {
-          this.showError = true
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.globalError = 'Email ou mot de passe incorrect'
+              return
+            }
+
+            this.formErrors = formatErrors(error.response.data.errors)
+          }
         }
       },
     },
