@@ -2,7 +2,7 @@
   <div class="flex min-h-screen flex-col bg-white dark:bg-gray-900">
     <main class="bg-gray-50 dark:bg-gray-900">
       <div
-        class="mx-auto flex flex-col items-center justify-center py-8 px-6 md:h-screen"
+        class="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen"
       >
         <a
           class="mb-8 flex items-center justify-center text-3xl font-semibold dark:text-white lg:mb-10"
@@ -94,6 +94,30 @@
               Content de vous revoir ! Veuillez remplir le formulaire.
             </p>
 
+            <div
+              v-if="globalError"
+              class="mb-4 flex rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-gray-800 dark:text-red-400"
+              role="alert"
+            >
+              <svg
+                aria-hidden="true"
+                class="mr-3 inline h-5 w-5 flex-shrink-0"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="sr-only">Info</span>
+              <div>
+                {{ globalError }}
+              </div>
+            </div>
+
             <form class="mt-8" @submit.prevent="onLogin">
               <div class="mb-6">
                 <label
@@ -110,6 +134,12 @@
                   placeholder="name@gmail.com"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
                 />
+                <p
+                  v-if="formErrors && formErrors.email"
+                  class="mt-2 text-sm text-red-600 dark:text-red-500"
+                >
+                  {{ formErrors.email }}
+                </p>
               </div>
               <div class="mb-6">
                 <label
@@ -126,6 +156,12 @@
                   placeholder="••••••••"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
                 />
+                <p
+                  v-if="formErrors && formErrors.password"
+                  class="mt-2 text-sm text-red-600 dark:text-red-500"
+                >
+                  {{ formErrors.password }}
+                </p>
               </div>
 
               <button
@@ -155,6 +191,7 @@
 
 <script>
   import { mapActions } from 'vuex'
+  import { formatErrors } from '../services/errors.js'
 
   export default {
     name: 'LoginView',
@@ -164,7 +201,8 @@
           email: '',
           password: '',
         },
-        showError: false,
+        formErrors: {},
+        globalError: null,
       }
     },
     methods: {
@@ -175,7 +213,14 @@
           this.$router.push('/')
           this.showError = false
         } catch (error) {
-          this.showError = true
+          if (error.response) {
+            if (error.response.status === 400) {
+              this.globalError = 'Email ou mot de passe incorrect'
+              return
+            }
+
+            this.formErrors = formatErrors(error.response.data.errors)
+          }
         }
       },
     },
