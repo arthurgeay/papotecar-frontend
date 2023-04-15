@@ -4,6 +4,7 @@ import CreateTrip from '../src/views/CreateTrip.vue'
 import UpdateTrip from '../src/views/UpdateTrip.vue'
 import LoginView from '../src/views/LoginView.vue'
 import RegisterView from '../src/views/RegisterView.vue'
+import DashboardView from '../src/views/DashboardView.vue'
 import MessagesView from '../src/views/MessagesView.vue'
 import store from '../src/store'
 
@@ -24,6 +25,14 @@ const routes = [
       guest: true,
     },
   },
+    {
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: DashboardView,
+        meta: {
+            requiresAuth: true,
+        },
+    },
   {
     path: '/register',
     name: 'Register',

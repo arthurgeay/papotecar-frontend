@@ -2,7 +2,7 @@
   <NavBar />
   <div class="create-trip flex h-screen w-screen items-center justify-center">
     <div
-      class="block rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 lg:w-1/2"
+      class="block rounded-lg border border-gray-200 p-6 shadow dark:border-gray-700 dark:bg-gray-800 lg:w-1/2"
     >
       <h2 class="text-2xl font-bold text-white">Creer un trajet</h2>
       <form>
@@ -10,12 +10,12 @@
           <AutoComplete
             name="Lieu de départ"
             class="flex-1"
-            @citySelected="(e) => (trip.departure_location = e)"
+            @city-selected="(e) => (trip.departure_location = e)"
           />
           <AutoComplete
             name="Lieu d'arrivée"
             class="ml-8 flex-1"
-            @citySelected="(e) => (trip.arrival_location = e)"
+            @city-selected="(e) => (trip.arrival_location = e)"
           />
         </div>
 
@@ -77,13 +77,23 @@
           ></textarea>
         </div>
 
-        <button
-          type="button"
-          class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
-          @click="saveTrip"
-        >
-          Enregistrer
-        </button>
+        <div class="flex">
+          <button
+            type="button"
+            class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
+            @click="saveTrip"
+          >
+            Enregistrer
+          </button>
+          <router-link to="/dashboard" class="ml-8 block">
+            <button
+              type="button"
+              class="return w-fulltext-gray-900 m-0 mb-2 mr-2 rounded-lg border border-gray-300 bg-white px-5 px-5 py-2.5 py-2.5 text-sm font-medium hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+            >
+              Annuler
+            </button>
+          </router-link>
+        </div>
       </form>
     </div>
   </div>
@@ -137,7 +147,9 @@
               'Authorization': `Bearer ${this.$store.getters.getToken}`,
             },
           })
-          this.$router.push('/')
+          this.$notyf.success('Votre trajet a bien été enregistré')
+
+          this.$router.push('/dashboard')
         } catch (error) {
           alert('Une erreur est survenue')
         }
