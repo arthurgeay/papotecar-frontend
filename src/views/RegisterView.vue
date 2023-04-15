@@ -228,6 +228,8 @@
       ...mapActions(['register']),
       async onRegister() {
         try {
+          this.formErrors = {}
+
           await this.register(this.form)
           this.$router.push('/')
         } catch (error) {
