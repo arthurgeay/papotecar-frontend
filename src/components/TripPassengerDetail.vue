@@ -104,6 +104,7 @@
         <button
           type="button"
           class="mt-2 w-full rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+          @click="unsubcribeFromTrip"
         >
           Se désinscrire
         </button>
@@ -113,6 +114,8 @@
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     name: 'ResultElement',
     props: {
@@ -149,6 +152,18 @@
         const heureFormat = heures < 10 ? `0${heures}` : heures
         const minuteFormat = minutes < 10 ? `0${minutes}` : minutes
         this.arrival_datetime = `${heureFormat}h${minuteFormat}`
+      },
+      async unsubcribeFromTrip() {
+        await axios.delete(
+          `trips/${this.result.id}/passengers/${this.$store.getters.getUser?.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.$store.getters.getToken}`,
+            },
+          }
+        )
+
+        return this.$router.go(0)
       },
     },
   }
