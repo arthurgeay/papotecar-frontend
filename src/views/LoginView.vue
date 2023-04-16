@@ -196,6 +196,7 @@
 
           await this.login(this.form)
           this.$router.push('/')
+          this.$notyf.success('Heureux de vous revoir 😍')
         } catch (error) {
           if (error.response) {
             if (error.response.status === 400) {

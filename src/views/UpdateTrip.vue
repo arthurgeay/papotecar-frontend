@@ -219,7 +219,9 @@
               'Authorization': `Bearer ${this.$store.getters.getToken}`,
             },
           })
+
           this.$router.push('/dashboard')
+          this.$notyf.success('Votre trajet a bien été modifié')
         } catch (error) {
           if (error.response.status === 400) {
             if (
