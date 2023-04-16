@@ -373,11 +373,11 @@
               'Authorization': `Bearer ${this.$store.getters.getToken}`,
             },
           })
+
+          this.$router.go(0)
         } catch (error) {
           console.log(error)
         }
-
-        return this.$router.go(0)
       },
       async approvePassenger(passengerId) {
         await axios.put(

@@ -232,6 +232,8 @@
 
           await this.register(this.form)
           this.$router.push('/')
+
+          this.$notyf.success('Inscription réussie 🎉')
         } catch (error) {
           if (error.response) {
             this.formErrors = formatErrors(error.response.data.errors)
