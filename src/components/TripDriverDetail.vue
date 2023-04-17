@@ -351,13 +351,24 @@
         )
 
         const data = await result.json()
-        const secondes = data.routes[0].duration
-        const heures = Math.floor(secondes / 3600)
-        const minutes = Math.floor((secondes % 3600) / 60)
-        const heureFormat = heures < 10 ? `0${heures}` : heures
-        const minuteFormat = minutes < 10 ? `0${minutes}` : minutes
-        this.arrival_datetime = `${heureFormat}h${minuteFormat}`
+        const durationSeconds = data.routes[0].duration
+        const durationMinutes = Math.floor(durationSeconds / 60)
+        const [hours1, minutes1] = [
+          Math.floor(durationMinutes / 60),
+          durationMinutes % 60,
+        ]
+        const [hours2, minutes2] = this.departure_datetime
+          .split('H')
+          .map(Number)
+
+        const totalMinutes = (hours1 + hours2) * 60 + minutes1 + minutes2
+        const hours = Math.floor(totalMinutes / 60)
+        const minutes = totalMinutes % 60
+        this.arrival_datetime = `${hours.toString().padStart(2, '0')}h${minutes
+          .toString()
+          .padStart(2, '0')}`
       },
+
       goToMessages(tripId) {
         this.$router.push(`messages/${tripId}`)
       },
