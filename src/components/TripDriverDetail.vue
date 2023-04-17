@@ -353,15 +353,18 @@
         const data = await result.json()
         const durationSeconds = data.routes[0].duration
         const durationMinutes = Math.floor(durationSeconds / 60)
-        const [hours1, minutes1] = [
+        const [firstTimeHour, firstTimeMinutes] = [
           Math.floor(durationMinutes / 60),
           durationMinutes % 60,
         ]
-        const [hours2, minutes2] = this.departure_datetime
+        const [secondTimeHour, secondTimeMinutes] = this.departure_datetime
           .split('H')
           .map(Number)
 
-        const totalMinutes = (hours1 + hours2) * 60 + minutes1 + minutes2
+        const totalMinutes =
+          (firstTimeHour + secondTimeHour) * 60 +
+          firstTimeMinutes +
+          secondTimeMinutes
         const hours = Math.floor(totalMinutes / 60)
         const minutes = totalMinutes % 60
         this.arrival_datetime = `${hours.toString().padStart(2, '0')}h${minutes
