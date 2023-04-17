@@ -59,6 +59,24 @@
             {{ formErrors.departure_datetime }}
           </p>
         </div>
+        <div class="mb-6">
+          <p>
+            <label
+              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              >Heure de départ</label
+            >
+            <input
+              id="starting-date-time"
+              v-model="trip.departure_datetime_hour"
+              placeholder="12:30"
+              min="00:00"
+              max="23:59"
+              type="time"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              required
+            />
+          </p>
+        </div>
 
         <div class="mb-6">
           <label
@@ -124,7 +142,7 @@
 
         <div class="flex">
           <button
-            type="button"
+            type="submit"
             class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
             @click="saveTrip"
           >
@@ -177,6 +195,7 @@
               longitude: 0.0,
             },
           },
+          departure_datetime_hour: null,
           departure_datetime: null,
           max_passengers: 0,
           price: 0.0,
@@ -198,6 +217,18 @@
         })
 
         this.trip = result.data
+
+        const hours = new Date(result.data.departure_datetime)
+          .getUTCHours()
+          .toString()
+          .padStart(2, '0')
+        const minutes = new Date(result.data.departure_datetime)
+          .getUTCMinutes()
+          .toString()
+          .padStart(2, '0')
+
+        this.trip.departure_datetime_hour = `${hours}:${minutes}`
+
         this.trip.departure_datetime = format(
           new Date(result.data.departure_datetime),
           'yyyy-MM-dd'
@@ -206,8 +237,13 @@
 
       async saveTrip() {
         this.trip.departure_datetime = new Date(
-          this.trip.departure_datetime
-        ).toISOString()
+          `${this.trip.departure_datetime}T${this.trip.departure_datetime_hour}`
+        )
+        this.trip.departure_datetime.setUTCHours(
+          this.trip.departure_datetime.getUTCHours() + 2
+        )
+        this.trip.departure_datetime =
+          this.trip.departure_datetime.toISOString()
 
         try {
           this.formErrors = {}
